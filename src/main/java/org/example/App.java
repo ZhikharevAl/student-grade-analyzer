@@ -58,11 +58,19 @@ public class App {
     System.out.println("\nСредний балл по предметам:");
     avgGrades.forEach((subject, avg) -> System.out.printf("%s - %.2f%n", subject, avg));
 
-    System.out.println("\nЛучшие ученики:");
+    if (best.size() == 1) {
+      System.out.println("\nЛучший ученик:");
+    } else {
+      System.out.println("\nЛучшие ученики:");
+    }
     best.forEach(
         s -> System.out.printf("%s (средний балл - %.2f)%n", s.getFullName(), s.getAverageGrade()));
 
-    System.out.println("\nХудшие ученики:");
+    if (worst.size() == 1) {
+      System.out.println("\nХудший ученик:");
+    } else {
+      System.out.println("\nХудшие ученики:");
+    }
     worst.forEach(
         s -> System.out.printf("%s (средний балл - %.2f)%n", s.getFullName(), s.getAverageGrade()));
 
@@ -82,12 +90,20 @@ public class App {
       avgGrades.forEach((subject, avg) -> writer.printf("%s - %.2f%n", subject, avg));
       writer.println();
 
-      writer.println("Лучшие ученики:");
+      if (best.size() == 1) {
+        writer.println("Лучший ученик:");
+      } else {
+        writer.println("Лучшие ученики:");
+      }
       best.forEach(
           s -> writer.printf("%s (средний балл - %.2f)%n", s.getFullName(), s.getAverageGrade()));
       writer.println();
 
-      writer.println("Худшие ученики:");
+      if (worst.size() == 1) {
+        writer.println("Худший ученик:");
+      } else {
+        writer.println("Худшие ученики:");
+      }
       worst.forEach(
           s -> writer.printf("%s (средний балл - %.2f)%n", s.getFullName(), s.getAverageGrade()));
       writer.println();
