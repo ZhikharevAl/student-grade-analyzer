@@ -1,7 +1,12 @@
 package org.example.service;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.example.model.Student;
-import io.qameta.allure.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,19 +33,19 @@ public class StudentRankingTest {
     grades1.put("Математика", 5);
     grades1.put("Физика", 4);
     grades1.put("Химия", 5);
-    Student student1 = new Student("Иванов Иван Иванович", grades1); // Средний: 4.67
+    Student student1 = new Student("Иванов Иван Иванович", grades1);
 
     Map<String, Integer> grades2 = new HashMap<>();
     grades2.put("Математика", 4);
     grades2.put("Физика", 5);
     grades2.put("Химия", 4);
-    Student student2 = new Student("Петров Петр Петрович", grades2); // Средний: 4.33
+    Student student2 = new Student("Петров Петр Петрович", grades2);
 
     Map<String, Integer> grades3 = new HashMap<>();
     grades3.put("Математика", 3);
     grades3.put("Физика", 3);
     grades3.put("Химия", 3);
-    Student student3 = new Student("Сидоров Сидор Сидорович", grades3); // Средний: 3.0
+    Student student3 = new Student("Сидоров Сидор Сидорович", grades3);
 
     students = Arrays.asList(student1, student2, student3);
   }
@@ -54,7 +59,7 @@ public class StudentRankingTest {
   void testFindBestStudent() {
     List<Student> bestStudents = studentRanking.findBestStudents(students);
     assertEquals(1, bestStudents.size());
-    assertEquals("Иванов Иван Иванович", bestStudents.get(0).getFullName());
+    assertEquals("Иванов Иван Иванович", bestStudents.getFirst().getFullName());
   }
 
   @Test
@@ -66,7 +71,7 @@ public class StudentRankingTest {
   void testFindWorstStudent() {
     List<Student> worstStudents = studentRanking.findWorstStudents(students);
     assertEquals(1, worstStudents.size());
-    assertEquals("Сидоров Сидор Сидорович", worstStudents.get(0).getFullName());
+    assertEquals("Сидоров Сидор Сидорович", worstStudents.getFirst().getFullName());
   }
 
   @Test
@@ -102,7 +107,7 @@ public class StudentRankingTest {
   @Story("Ранжирование студентов")
   @Feature("Граничные случаи")
   void testFindStudentsInEmptyList() {
-    List<Student> emptyList = Arrays.asList();
+    List<Student> emptyList = List.of();
 
     List<Student> bestStudents = studentRanking.findBestStudents(emptyList);
     assertTrue(bestStudents.isEmpty());
