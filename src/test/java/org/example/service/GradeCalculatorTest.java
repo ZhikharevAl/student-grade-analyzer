@@ -5,7 +5,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Link;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
@@ -56,7 +55,6 @@ public class GradeCalculatorTest {
   @Description("Проверяем корректность расчета среднего балла когда у студентов разные предметы")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Расчет средних оценок")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-301")
   void testCalculateAverageGradesBySubject() {
     stepPrepareTestStudents();
@@ -69,7 +67,6 @@ public class GradeCalculatorTest {
   @Description("Проверяем, что сервис корректно обрабатывает пустой список")
   @Severity(SeverityLevel.NORMAL)
   @Story("Граничные случаи")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-302")
   void testCalculateAverageGradesWithEmptyList() {
     stepPrepareEmptyList();
@@ -118,19 +115,16 @@ public class GradeCalculatorTest {
     assertEquals(4.0, avgGrades.get("Математика"), 0.01,
         "Средняя оценка по математике должна быть 4.0");
 
-    // Физика: (4 + 5) / 2 = 4.5
     Allure.parameter("Ожидаемая средняя по физике", 4.5);
     Allure.parameter("Фактическая средняя по физике", avgGrades.get("Физика"));
     assertEquals(4.5, avgGrades.get("Физика"), 0.01,
         "Средняя оценка по физике должна быть 4.5");
 
-    // Химия: только у одного студента = 3.0
     Allure.parameter("Ожидаемая средняя по химии", 3.0);
     Allure.parameter("Фактическая средняя по химии", avgGrades.get("Химия"));
     assertEquals(3.0, avgGrades.get("Химия"), 0.01,
         "Средняя оценка по химии должна быть 3.0");
 
-    // Биология: только у одного студента = 4.0
     Allure.parameter("Ожидаемая средняя по биологии", 4.0);
     Allure.parameter("Фактическая средняя по биологии", avgGrades.get("Биология"));
     assertEquals(4.0, avgGrades.get("Биология"), 0.01,

@@ -5,7 +5,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Link;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
@@ -42,7 +41,6 @@ public class GradeAnalyzerServiceTest {
   @Description("Проверяем корректность расчета среднего балла для каждого предмета на основе оценок всех студентов")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Расчет средних оценок")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-201")
   void testCalculateAverageGradesBySubject() {
     stepPrepareTestData();
@@ -55,7 +53,6 @@ public class GradeAnalyzerServiceTest {
   @Description("Проверяем, что сервис правильно находит ученика(ов) с самым высоким средним баллом")
   @Severity(SeverityLevel.NORMAL)
   @Story("Рейтинг учеников")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-202")
   void testFindBestStudent() {
     stepPrepareTestData();
@@ -68,7 +65,6 @@ public class GradeAnalyzerServiceTest {
   @Description("Проверяем, что сервис правильно находит ученика(ов) с самым низким средним баллом")
   @Severity(SeverityLevel.NORMAL)
   @Story("Рейтинг учеников")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-203")
   void testFindWorstStudent() {
     stepPrepareTestData();
