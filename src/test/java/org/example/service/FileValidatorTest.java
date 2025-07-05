@@ -1,6 +1,16 @@
 package org.example.service;
 
-import io.qameta.allure.*;
+
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Step;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("Тестирование валидатора файлов")
+@Epic("Валидация данных")
+@Feature("Валидация файлов")
 public class FileValidatorTest {
 
   private FileValidator fileValidator;
@@ -26,12 +38,13 @@ public class FileValidatorTest {
       "Сидорова Анна Викторовна"
   })
   @DisplayName("Валидация корректных ФИО")
-  @Description("Проверяем, что валидатор правильно определяет корректные ФИО.")
+  @Description("Тестируем валидацию корректных ФИО, которые содержат ровно 3 слова (фамилия, имя, отчество)")
   @Severity(SeverityLevel.CRITICAL)
-  @Story("Валидация данных")
-  @Feature("ФИО")
+  @Story("Валидация ФИО")
+  @Link(name = "Требования", url = "https://example.com/requirements")
+  @Issue("TASK-123")
   void testValidFullNames(String fullName) {
-    assertTrue(fileValidator.isValidFullName(fullName));
+    stepValidateFullName(fullName, true);
   }
 
   @ParameterizedTest
@@ -43,33 +56,80 @@ public class FileValidatorTest {
       "   ",
   })
   @DisplayName("Валидация некорректных ФИО")
-  @Description("Проверяем, что валидатор правильно определяет некорректные ФИО.")
+  @Description("Тестируем валидацию некорректных ФИО: неполные имена, слишком длинные, пустые строки")
   @Severity(SeverityLevel.CRITICAL)
-  @Story("Валидация данных")
-  @Feature("ФИО")
+  @Story("Валидация ФИО")
+  @Link(name = "Требования", url = "https://example.com/requirements")
+  @Issue("TASK-124")
   void testInvalidFullNames(String fullName) {
-    assertFalse(fileValidator.isValidFullName(fullName));
+    stepValidateFullName(fullName, false);
   }
 
   @ParameterizedTest
   @ValueSource(ints = {1, 2, 3, 4, 5})
   @DisplayName("Валидация корректных оценок")
-  @Description("Проверяем, что валидатор правильно определяет корректные оценки.")
+  @Description("Тестируем валидацию корректных оценок в диапазоне от 1 до 5 включительно")
   @Severity(SeverityLevel.CRITICAL)
-  @Story("Валидация данных")
-  @Feature("Оценки")
+  @Story("Валидация оценок")
+  @Link(name = "Требования", url = "https://example.com/requirements")
+  @Issue("TASK-125")
   void testValidGrades(int grade) {
-    assertTrue(fileValidator.isValidGrade(grade));
+    stepValidateGrade(grade, true);
   }
 
   @ParameterizedTest
   @ValueSource(ints = {0, 6, -1, 10})
   @DisplayName("Валидация некорректных оценок")
-  @Description("Проверяем, что валидатор правильно определяет некорректные оценки.")
+  @Description("Тестируем валидацию некорректных оценок: отрицательные, нулевые, больше 5")
   @Severity(SeverityLevel.CRITICAL)
-  @Story("Валидация данных")
-  @Feature("Оценки")
+  @Story("Валидация оценок")
+  @Link(name = "Требования", url = "https://example.com/requirements")
+  @Issue("TASK-126")
   void testInvalidGrades(int grade) {
-    assertFalse(fileValidator.isValidGrade(grade));
+    stepValidateGrade(grade, false);
+  }
+
+  @Step("Валидация ФИО: '{fullName}', ожидается: {expected}")
+  private void stepValidateFullName(String fullName, boolean expected) {
+    Allure.parameter("Входное значение", fullName);
+    Allure.parameter("Ожидаемый результат", expected ? "Валидно" : "Невалидно");
+
+    boolean actualResult = fileValidator.isValidFullName(fullName);
+
+    Allure.parameter("Фактический результат", actualResult ? "Валидно" : "Невалидно");
+
+    if (expected) {
+      assertTrue(actualResult,
+          String.format("ФИО '%s' должно быть валидным, но получили: %s", fullName, actualResult));
+    } else {
+      assertFalse(actualResult,
+          String.format("ФИО '%s' должно быть невалидным, но получили: %s", fullName, actualResult));
+    }
+
+    Allure.attachment("Результат валидации",
+        String.format("Входное значение: %s\nОжидалось: %s\nПолучено: %s",
+            fullName, expected ? "валидно" : "невалидно", actualResult ? "валидно" : "невалидно"));
+  }
+
+  @Step("Валидация оценки: {grade}, ожидается: {expected}")
+  private void stepValidateGrade(int grade, boolean expected) {
+    Allure.parameter("Входное значение", grade);
+    Allure.parameter("Ожидаемый результат", expected ? "Валидно" : "Невалидно");
+
+    boolean actualResult = fileValidator.isValidGrade(grade);
+
+    Allure.parameter("Фактический результат", actualResult ? "Валидно" : "Невалидно");
+
+    if (expected) {
+      assertTrue(actualResult,
+          String.format("Оценка %d должна быть валидной, но получили: %s", grade, actualResult));
+    } else {
+      assertFalse(actualResult,
+          String.format("Оценка %d должна быть невалидной, но получили: %s", grade, actualResult));
+    }
+
+    Allure.attachment("Результат валидации",
+        String.format("Входное значение: %d\nОжидалось: %s\nПолучено: %s",
+            grade, expected ? "валидно" : "невалидно", actualResult ? "валидно" : "невалидно"));
   }
 }
