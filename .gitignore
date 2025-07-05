@@ -39,3 +39,4 @@ build/
 
 ## Allure Framework ##
 .allure
+allure-results
