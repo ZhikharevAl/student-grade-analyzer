@@ -19,7 +19,6 @@ public class GradeAnalyzerService {
     this.studentRanking = new StudentRanking();
   }
 
-  // Конструктор для внедрения зависимостей
   public GradeAnalyzerService(StudentFileReader fileReader,
                               GradeCalculator gradeCalculator,
                               StudentRanking studentRanking) {
