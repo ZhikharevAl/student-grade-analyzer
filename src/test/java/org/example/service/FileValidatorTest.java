@@ -6,7 +6,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Link;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
@@ -41,7 +40,6 @@ public class FileValidatorTest {
   @Description("Тестируем валидацию корректных ФИО, которые содержат ровно 3 слова (фамилия, имя, отчество)")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Валидация ФИО")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-123")
   void testValidFullNames(String fullName) {
     stepValidateFullName(fullName, true);
@@ -59,7 +57,6 @@ public class FileValidatorTest {
   @Description("Тестируем валидацию некорректных ФИО: неполные имена, слишком длинные, пустые строки")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Валидация ФИО")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-124")
   void testInvalidFullNames(String fullName) {
     stepValidateFullName(fullName, false);
@@ -71,7 +68,6 @@ public class FileValidatorTest {
   @Description("Тестируем валидацию корректных оценок в диапазоне от 1 до 5 включительно")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Валидация оценок")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-125")
   void testValidGrades(int grade) {
     stepValidateGrade(grade, true);
@@ -83,7 +79,6 @@ public class FileValidatorTest {
   @Description("Тестируем валидацию некорректных оценок: отрицательные, нулевые, больше 5")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Валидация оценок")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-126")
   void testInvalidGrades(int grade) {
     stepValidateGrade(grade, false);
@@ -103,7 +98,8 @@ public class FileValidatorTest {
           String.format("ФИО '%s' должно быть валидным, но получили: %s", fullName, actualResult));
     } else {
       assertFalse(actualResult,
-          String.format("ФИО '%s' должно быть невалидным, но получили: %s", fullName, actualResult));
+          String.format("ФИО '%s' должно быть невалидным, но получили: %s", fullName,
+              actualResult));
     }
 
     Allure.attachment("Результат валидации",

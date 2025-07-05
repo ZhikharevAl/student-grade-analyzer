@@ -5,7 +5,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Link;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Step;
@@ -62,7 +61,6 @@ public class StudentRankingTest {
   @Description("Проверяем, что сервис правильно находит ученика с самым высоким средним баллом")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Поиск лучших студентов")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-401")
   void testFindBestStudent() {
     stepPrepareTestStudents();
@@ -75,7 +73,6 @@ public class StudentRankingTest {
   @Description("Проверяем, что сервис правильно находит ученика с самым низким средним баллом")
   @Severity(SeverityLevel.CRITICAL)
   @Story("Поиск худших студентов")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-402")
   void testFindWorstStudent() {
     stepPrepareTestStudents();
@@ -88,7 +85,6 @@ public class StudentRankingTest {
   @Description("Проверяем, что сервис правильно находит всех учеников с одинаковым максимальным баллом")
   @Severity(SeverityLevel.NORMAL)
   @Story("Одинаковые баллы")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-403")
   void testFindBestStudentsWithSameGrades() {
     List<Student> studentsWithSameGrades = stepPrepareStudentsWithSameGrades();
@@ -101,7 +97,6 @@ public class StudentRankingTest {
   @Description("Проверяем, что сервис корректно обрабатывает пустой список студентов")
   @Severity(SeverityLevel.NORMAL)
   @Story("Граничные случаи")
-  @Link(name = "Требования", url = "https://example.com/requirements")
   @Issue("TASK-404")
   void testFindStudentsInEmptyList() {
     stepPrepareEmptyList();
